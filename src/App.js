@@ -1,24 +1,20 @@
-import logo from './logo.svg';
+
+import { useState } from 'react';
 import './App.css';
+import TodoList from './components/TodoList/TodoList';
+import AddTodo from './components/AddTodo/AddTodo';
+import TodoContext from './context/TodoContext';
 
 function App() {
+  const [list, setList] = useState([
+    {id: 1, todoData: 'todo 1', finished:false},
+    {id: 2, todoData: 'todo 2', finished:false}
+]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TodoContext.Provider value={{list, setList}}>
+    <AddTodo updateList={(todo)=> setList([...list, {id: list.length + 1, todoData: todo, finished: false}])} />
+    <TodoList/>
+    </TodoContext.Provider>
   );
 }
 
